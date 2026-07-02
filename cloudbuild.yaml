@@ -1,22 +1,18 @@
 steps:
-  # Step 1: Build the production container image natively
+  # Step 1: Build the production container image using your explicit project ID
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build', 
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/agent-apps-repo/cx-supervisor:latest', 
+      '-t', 'us-central1-docker.pkg.dev/cxlens-grr/agent-apps-repo/cx-supervisor:latest', 
       '.'
     ]
 
-  # Step 2: Push the compiled image into your Artifact Registry repository
+  # Step 2: Push the compiled image into your verified Artifact Registry repository
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push', 
-      'us-central1-docker.pkg.dev/$PROJECT_ID/agent-apps-repo/cx-supervisor:latest'
+      'us-central1-docker.pkg.dev/cxlens-grr/agent-apps-repo/cx-supervisor:latest'
     ]
 
-# ---------------------------------------------------------
-# THE FIX: Force the platform to stream traces directly
-# to Cloud Logging, satisfying your Service Account rule.
-# ---------------------------------------------------------
 options:
   logging: CLOUD_LOGGING_ONLY
